@@ -1,3 +1,2 @@
-include ':mp3encoder'
 include ':app'
 rootProject.name = "AvStudy"
