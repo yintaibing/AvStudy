@@ -6,9 +6,23 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/btn_test"
+        android:id="@+id/btn_jni_test"
         style="@android:style/Widget.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="test" />
+        android:text="btn_jni_test" />
+
+    <Button
+        android:id="@+id/btn_media_player"
+        style="@android:style/Widget.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="btn_media_player" />
+
+    <Button
+        android:id="@+id/btn_mp4_decode"
+        style="@android:style/Widget.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="btn_mp4_decode" />
 </LinearLayout>

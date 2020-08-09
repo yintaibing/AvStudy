@@ -22,7 +22,7 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String inputStr = String.valueOf(System.currentTimeMillis());
-                String s = jniTest.stringFromJNI(inputStr);
+                String s = jniTest.nativeStringFromJNI(inputStr);
                 button.setText(s);
             }
         });
