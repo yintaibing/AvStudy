@@ -4,15 +4,14 @@ import android.Manifest;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.PixelFormat;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.Toast;
 
 import java.io.File;
 
@@ -24,11 +23,14 @@ import me.yintaibing.avstudy.ContextUtils;
 import me.yintaibing.avstudy.R;
 
 public class Mp4DecodeActivity extends AppCompatActivity {
-    private static final int REQUEST_CODE_EXTERNAL_STORAGE = 100;
+    private static final int REQUEST_CODE_AVSTUDY_DOG = 100;
+    private static final int REQUEST_CODE_ALBUM_VIDEO = 101;
     private static final int REQUEST_CODE_SELECT_MP4_FROM_ALBUM = 200;
 
     private SurfaceView surfaceView;
     private Mp4Decoder mp4Decoder;
+    private boolean surfaceReady;
+    private String videoFile;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,27 +41,55 @@ public class Mp4DecodeActivity extends AppCompatActivity {
         surfaceView = findViewById(R.id.surface_view);
         SurfaceHolder holder = surfaceView.getHolder();
         holder.setFormat(PixelFormat.RGBA_8888);
+        holder.addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(SurfaceHolder surfaceHolder) {
+                surfaceReady = true;
+                tryPlay();
+            }
 
-        surfaceView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+                surfaceReady = false;
+            }
+        });
+
+        findViewById(R.id.btn_avstudy_dog).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ActivityCompat.requestPermissions(Mp4DecodeActivity.this,
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        REQUEST_CODE_EXTERNAL_STORAGE);
+                requestExternalStoragePermissions(REQUEST_CODE_AVSTUDY_DOG);
+            }
+        });
+        findViewById(R.id.btn_album_video).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestExternalStoragePermissions(REQUEST_CODE_ALBUM_VIDEO);
             }
         });
 
         mp4Decoder = new Mp4Decoder();
     }
 
+    private void requestExternalStoragePermissions(int requestCode) {
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_CODE_EXTERNAL_STORAGE) {
+        if (requestCode == REQUEST_CODE_AVSTUDY_DOG || requestCode == REQUEST_CODE_ALBUM_VIDEO) {
             if (ContextUtils.checkGrantPermissionResults(grantResults)) {
-//                selectMp4FromAlbum();
-                playLocalMp4();
+                if (requestCode == REQUEST_CODE_AVSTUDY_DOG) {
+                    playLocalMp4();
+                } else {
+                    selectMp4FromAlbum();
+                }
             }
         }
     }
@@ -73,7 +103,8 @@ public class Mp4DecodeActivity extends AppCompatActivity {
     private void playLocalMp4() {
         File f = new File(Environment.getExternalStorageDirectory(), "avstudy_dog.mp4");
         if (f.exists()) {
-            callDecodeMp4(f.getAbsolutePath());
+            videoFile = f.getAbsolutePath();
+            tryPlay();
         }
     }
 
@@ -90,17 +121,16 @@ public class Mp4DecodeActivity extends AppCompatActivity {
                 cursor.moveToFirst();
 
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                String filePath = cursor.getString(columnIndex);
+                videoFile = cursor.getString(columnIndex);
                 cursor.close();
-                callDecodeMp4(filePath);
+                tryPlay();
             }
         }
     }
 
-    private void callDecodeMp4(String filePath) {
-        Toast.makeText(this, filePath, Toast.LENGTH_LONG).show();
-        if (mp4Decoder != null) {
-            mp4Decoder.decodeMp4(filePath, surfaceView.getHolder().getSurface());
+    private void tryPlay() {
+        if (mp4Decoder != null && !TextUtils.isEmpty(videoFile) && surfaceReady) {
+            mp4Decoder.decodeMp4(videoFile, surfaceView.getHolder().getSurface());
         }
     }
 }

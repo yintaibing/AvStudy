@@ -106,10 +106,10 @@ JNIEXPORT void JNICALL Java_me_yintaibing_avstudy_video_Mp4Decoder_decodeMp4
 
         if (avPacket->stream_index == video_stream_idx) {
             length = avcodec_decode_video2(pCodecCtx, frame, &got_frame, avPacket);
-            LOGE(" 获得长度   %d ", length);
-            LOGE(" 获得   %d ", got_frame);
+//            LOGE(" 获得长度   %d ", length);
+//            LOGE(" 获得   %d ", got_frame);
             if (got_frame) {
-                LOGE("解码=%d", frameCount++);
+//                LOGE("解码=%d", frameCount++);
 
                 //设置window 缓冲器的 format 和size等
                 ANativeWindow_setBuffersGeometry(nativeWindow,
