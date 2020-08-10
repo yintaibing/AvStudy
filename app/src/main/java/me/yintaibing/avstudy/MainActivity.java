@@ -8,6 +8,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import me.yintaibing.avstudy.audio.Mp3DecodeActivity;
 import me.yintaibing.avstudy.test.TestActivity;
 import me.yintaibing.avstudy.video.Mp4DecodeActivity;
 
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_mp3_decode).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, TestActivity.class));
+                startActivity(new Intent(MainActivity.this, Mp3DecodeActivity.class));
             }
         });
         findViewById(R.id.btn_mp4_decode).setOnClickListener(new View.OnClickListener() {

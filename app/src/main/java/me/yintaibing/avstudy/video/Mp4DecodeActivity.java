@@ -1,6 +1,5 @@
 package me.yintaibing.avstudy.video;
 
-import android.Manifest;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.PixelFormat;
@@ -8,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -17,11 +15,8 @@ import android.widget.TextView;
 
 import java.io.File;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import me.yintaibing.avstudy.ContextUtils;
 import me.yintaibing.avstudy.R;
 
 public class Mp4DecodeActivity extends AppCompatActivity {

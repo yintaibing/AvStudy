@@ -22,6 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".test.TestActivity" />
+        <activity android:name=".audio.Mp3DecodeActivity" />
         <activity android:name=".video.Mp4DecodeActivity" />
     </application>
 
