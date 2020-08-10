@@ -56,11 +56,19 @@
             android:text="原生MediaPlayer播放" />
 
         <Button
-            android:id="@+id/btn_use_ffmpeg_player"
+            android:id="@+id/btn_use_ffmpeg_audio_track_player"
             style="@android:style/Widget.Button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="FFmpeg +\nAudioTrack播放" />
+
+        <Button
+            android:id="@+id/btn_use_ffmpeg_open_sl_player"
+            style="@android:style/Widget.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="FFmpeg +\nOpenSL播放" />
     </LinearLayout>
 </LinearLayout>

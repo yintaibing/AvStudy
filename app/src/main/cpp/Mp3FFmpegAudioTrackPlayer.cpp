@@ -14,6 +14,7 @@ extern "C" {
 #include "libavformat/avformat.h"
 #include "libswresample/swresample.h"
 #include "libswscale/swscale.h"
+#include "libavutil/avutil.h"
 
 JNIEXPORT void JNICALL Java_me_yintaibing_avstudy_audio_Mp3FFmpegAudioTrackPlayer_decodeMp3(
         JNIEnv *env,
@@ -23,6 +24,7 @@ JNIEXPORT void JNICALL Java_me_yintaibing_avstudy_audio_Mp3FFmpegAudioTrackPlaye
     char errorbuf[1024] = {0};
 
     av_register_all();
+    avcodec_register_all();
 
     AVFormatContext *pFormatContext = avformat_alloc_context();
 

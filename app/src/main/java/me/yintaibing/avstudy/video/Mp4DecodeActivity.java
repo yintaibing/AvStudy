@@ -113,7 +113,7 @@ public class Mp4DecodeActivity extends AppCompatActivity {
 
     private void setVideoFilePath(String videoFilePath) {
         this.videoFilePath = videoFilePath;
-        tvFilePath.setText(curPlayer.getVideoFilePath());
+        tvFilePath.setText(videoFilePath);
         if (curPlayer != null) {
             curPlayer.setVideoFilePath(videoFilePath);
         }

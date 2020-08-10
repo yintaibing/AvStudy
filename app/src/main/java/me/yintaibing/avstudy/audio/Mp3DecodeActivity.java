@@ -14,8 +14,9 @@ import me.yintaibing.avstudy.R;
 public class Mp3DecodeActivity extends AppCompatActivity {
     private static final String TAG = "Mp3DecodeActivity";
 
-    private static final String DEFAULT_FILE_PATH =
-            Environment.getExternalStorageDirectory() + File.separator + "avstudy_dream_it_possible.mp3";
+    private static final String DEFAULT_FILE_PATH = Environment.getExternalStorageDirectory() + File.separator
+//            + "avstudy_dream_it_possible.mp3";
+    + "MIUI/sound_recorder/avstudy_audio.mp3";
 
     private TextView tvFilePath;
 
@@ -49,13 +50,19 @@ public class Mp3DecodeActivity extends AppCompatActivity {
         findViewById(R.id.btn_use_media_player).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                play(false);
+                play(0);
             }
         });
-        findViewById(R.id.btn_use_ffmpeg_player).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_use_ffmpeg_audio_track_player).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                play(true);
+                play(1);
+            }
+        });
+        findViewById(R.id.btn_use_ffmpeg_open_sl_player).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                play(2);
             }
         });
     }
@@ -71,36 +78,27 @@ public class Mp3DecodeActivity extends AppCompatActivity {
 
     private void setAudioFilePath(String audioFilePath) {
         this.audioFilePath = audioFilePath;
-        tvFilePath.setText(curPlayer.getAudioFilePath());
+        tvFilePath.setText(audioFilePath);
         if (curPlayer != null) {
             curPlayer.setAudioFilePath(audioFilePath);
         }
     }
 
-    private void play(boolean useFFmpeg) {
-        if (curPlayer == null) {
-            curPlayer = new Mp3MediaPlayer();
-            curPlayer.setAudioFilePath(audioFilePath);
+    private void play(int which) {
+        switch (which) {
+            case 0:
+                curPlayer = new Mp3MediaPlayer();
+                break;
+            case 1:
+                curPlayer = new Mp3FFmpegAudioTrackPlayer();
+                break;
+            case 2:
+                curPlayer = new Mp3FFmpegOpenSLPlayer();
+                break;
+            default:
+                return;
         }
-        curPlayer.tryPlay();
-
-        boolean justInit = false;
-        if (useFFmpeg) {
-            if (mp3MediaPlayer == null) {
-                justInit = true;
-                mp3MediaPlayer = new Mp3MediaPlayer();
-            }
-            curPlayer = mp3MediaPlayer;
-        } else {
-            if (mp3FFmpegAudioTrackPlayer == null) {
-                justInit = true;
-                mp3FFmpegAudioTrackPlayer = new Mp3FFmpegAudioTrackPlayer();
-            }
-            curPlayer = mp3FFmpegAudioTrackPlayer;
-        }
-        if (justInit) {
-            curPlayer.setAudioFilePath(audioFilePath);
-        }
+        curPlayer.setAudioFilePath(audioFilePath);
         curPlayer.tryPlay();
     }
 }
