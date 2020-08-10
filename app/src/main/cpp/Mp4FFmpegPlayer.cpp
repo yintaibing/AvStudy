@@ -3,7 +3,7 @@
 #include <android/log.h>
 #include <android/native_window_jni.h>
 #include <unistd.h>
-#include "include/me_yintaibing_avstudy_video_Mp4Decoder.h"
+#include "me_yintaibing_avstudy_video_Mp4FFmpegPlayer.h"
 
 #define LOGI(FORMAT, ...) __android_log_print(ANDROID_LOG_INFO,"jason",FORMAT,##__VA_ARGS__);
 #define LOGE(FORMAT, ...) __android_log_print(ANDROID_LOG_ERROR,"jason",FORMAT,##__VA_ARGS__);
@@ -20,7 +20,7 @@ extern "C" {
 //像素处理
 #include "libswscale/swscale.h"
 
-JNIEXPORT void JNICALL Java_me_yintaibing_avstudy_video_Mp4Decoder_decodeMp4
+JNIEXPORT void JNICALL Java_me_yintaibing_avstudy_video_Mp4FFmpegPlayer_decodeMp4
         (JNIEnv *env, jobject thiz, jstring filePath, jobject surface) {
     const char *input = env->GetStringUTFChars(filePath, 0);
     LOGE("输入文件：%s", input);
@@ -144,7 +144,7 @@ JNIEXPORT void JNICALL Java_me_yintaibing_avstudy_video_Mp4Decoder_decodeMp4
                 ANativeWindow_unlockAndPost(nativeWindow);
 
                 //模拟速度
-                usleep(1000 * 16);
+//                usleep(1000 * 16);
             }
         }
         av_free_packet(avPacket);

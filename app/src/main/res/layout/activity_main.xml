@@ -13,11 +13,11 @@
         android:text="btn_jni_test" />
 
     <Button
-        android:id="@+id/btn_media_player"
+        android:id="@+id/btn_mp3_decode"
         style="@android:style/Widget.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="btn_media_player" />
+        android:text="btn_mp3_decode" />
 
     <Button
         android:id="@+id/btn_mp4_decode"

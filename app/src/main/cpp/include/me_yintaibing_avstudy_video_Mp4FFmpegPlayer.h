@@ -10,7 +10,7 @@ extern "C" {
 /*
  * Class:     me_yintaibing_avstudy_video_Mp4Decoder
  */
-JNIEXPORT void JNICALL Java_me_yintaibing_avstudy_video_Mp4Decoder_decodeMp4
+JNIEXPORT void JNICALL Java_me_yintaibing_avstudy_video_Mp4FFmpegPlayer_decodeMp4
         (JNIEnv *, jobject, jstring, jobject);
 
 #ifdef __cplusplus
