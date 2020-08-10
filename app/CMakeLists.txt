@@ -94,6 +94,7 @@ add_library( # 设置library名称
 
         # 设置原生代码路径
         ${my_cpp_dir}/JniTest.cpp
+        ${my_cpp_dir}/Mp3FFmpegAudioTrackPlayer.cpp
         ${my_cpp_dir}/Mp4FFmpegPlayer.cpp
         )
 

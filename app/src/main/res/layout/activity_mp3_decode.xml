@@ -44,6 +44,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <Button
@@ -60,6 +61,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="FFmpeg播放" />
+            android:text="FFmpeg +\nAudioTrack播放" />
     </LinearLayout>
 </LinearLayout>
