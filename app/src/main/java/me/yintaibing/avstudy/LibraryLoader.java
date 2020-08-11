@@ -4,6 +4,8 @@ public class LibraryLoader {
     private static final String MY_LIB_NAME = "my_native_lib";
     private static final String[] LIBS = {
             "fdk-aac",
+            "mp3lame",
+            "x264",
             "avutil",
             "swresample",
             "avcodec",

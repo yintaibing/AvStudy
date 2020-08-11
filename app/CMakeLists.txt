@@ -82,6 +82,26 @@ set_target_properties(
         PROPERTIES IMPORTED_LOCATION
         ${ffmpeg_so_dir}/libfdk-aac.so
 )
+add_library(
+        mp3lame
+        SHARED
+        IMPORTED
+)
+set_target_properties(
+        mp3lame
+        PROPERTIES IMPORTED_LOCATION
+        ${ffmpeg_so_dir}/libmp3lame.so
+)
+add_library(
+        x264
+        SHARED
+        IMPORTED
+)
+set_target_properties(
+        x264
+        PROPERTIES IMPORTED_LOCATION
+        ${ffmpeg_so_dir}/libx264.so
+)
 
 # 添加自己编译的库。注意只能add_library一次（多个cpp），
 add_library( # 设置library名称
@@ -111,6 +131,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
 target_link_libraries(
         my_native_lib
         fdk-aac
+        mp3lame
+        x264
         avutil
         swresample
         avcodec

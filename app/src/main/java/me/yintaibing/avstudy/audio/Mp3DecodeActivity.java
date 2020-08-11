@@ -15,8 +15,8 @@ public class Mp3DecodeActivity extends AppCompatActivity {
     private static final String TAG = "Mp3DecodeActivity";
 
     private static final String DEFAULT_FILE_PATH = Environment.getExternalStorageDirectory() + File.separator
-//            + "avstudy_dream_it_possible.mp3";
-    + "MIUI/sound_recorder/avstudy_audio.mp3";
+            + "avstudy_dream_it_possible.mp3";
+//    + "MIUI/sound_recorder/avstudy_audio.mp3";
 
     private TextView tvFilePath;
 
