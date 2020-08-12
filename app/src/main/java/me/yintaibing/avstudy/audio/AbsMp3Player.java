@@ -8,6 +8,7 @@ public abstract class AbsMp3Player {
     private static final String TAG = "AbsMp3Player";
 
     private String audioFilePath;
+    private Callback callback;
 
     public AbsMp3Player() {
     }
@@ -20,6 +21,22 @@ public abstract class AbsMp3Player {
         this.audioFilePath = audioFilePath;
     }
 
+    public void setCallback(Callback callback) {
+        this.callback = callback;
+    }
+
+    public void onGotAudioInfo(int sampleRate,
+                               int sampleFormat,
+                               Long channels) {
+        if (callback != null) {
+            AudioInfo audioInfo = new AudioInfo();
+            audioInfo.sampleRate = sampleRate;
+            audioInfo.sampleFormat = sampleFormat;
+            audioInfo.channels = channels;
+            callback.onGotAudioInfo(audioInfo);
+        }
+    }
+
     public void tryPlay() {
         if (!TextUtils.isEmpty(audioFilePath)) {
             doPlay();
@@ -30,5 +47,10 @@ public abstract class AbsMp3Player {
 
     @CallSuper
     public void destroy() {
+        callback = null;
+    }
+
+    interface Callback {
+        void onGotAudioInfo(AudioInfo audioInfo);
     }
 }
