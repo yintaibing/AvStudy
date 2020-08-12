@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -13,23 +12,21 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.TextView;
 
-import java.io.File;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import me.yintaibing.avstudy.MainActivity;
 import me.yintaibing.avstudy.R;
 
 public class Mp4DecodeActivity extends AppCompatActivity {
     private static final String TAG = "Mp4DecodeActivity";
     private static final int REQUEST_CODE_SELECT_MP4_FROM_ALBUM = 200;
-    private static final String DEFAULT_FILE_PATH =
-            Environment.getExternalStorageDirectory() + File.separator + "avstudy_dog.mp4";
 
     private TextView tvFilePath;
     private SurfaceView surfaceView;
     private SurfaceHolder.Callback surfaceHolderCallback;
 
-    private String videoFilePath = DEFAULT_FILE_PATH;
+    private final String defaultVideoFilePath = MainActivity.TEST_MP4;
+    private String videoFilePath = defaultVideoFilePath;
     private AbsMp4Player curPlayer;
     private Mp4MediaPlayer mp4MediaPlayer;
     private Mp4FFmpegPlayer mp4FFmpegPlayer;
@@ -46,7 +43,7 @@ public class Mp4DecodeActivity extends AppCompatActivity {
         findViewById(R.id.btn_default_file).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setVideoFilePath(DEFAULT_FILE_PATH);
+                setVideoFilePath(defaultVideoFilePath);
             }
         });
         findViewById(R.id.btn_album_file).setOnClickListener(new View.OnClickListener() {

@@ -1,26 +1,21 @@
 package me.yintaibing.avstudy.audio;
 
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.TextView;
 
-import java.io.File;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import me.yintaibing.avstudy.MainActivity;
 import me.yintaibing.avstudy.R;
 
 public class Mp3DecodeActivity extends AppCompatActivity {
     private static final String TAG = "Mp3DecodeActivity";
 
-    private static final String DEFAULT_FILE_PATH = Environment.getExternalStorageDirectory() + File.separator
-            + "avstudy_dream_it_possible.mp3";
-//    + "MIUI/sound_recorder/avstudy_audio.mp3";
-
     private TextView tvFilePath;
 
-    private String audioFilePath = DEFAULT_FILE_PATH;
+    private final String defaultAudioFilePath = MainActivity.TEST_MP3;
+    private String audioFilePath = defaultAudioFilePath;
     private AbsMp3Player curPlayer;
     private Mp3MediaPlayer mp3MediaPlayer;
     private Mp3FFmpegAudioTrackPlayer mp3FFmpegAudioTrackPlayer;
@@ -37,7 +32,7 @@ public class Mp3DecodeActivity extends AppCompatActivity {
         findViewById(R.id.btn_default_file).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setAudioFilePath(DEFAULT_FILE_PATH);
+                setAudioFilePath(defaultAudioFilePath);
             }
         });
         findViewById(R.id.btn_album_file).setOnClickListener(new View.OnClickListener() {
