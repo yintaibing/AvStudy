@@ -76,6 +76,7 @@ public class Mp3DecodeActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (curPlayer != null) {
+            curPlayer.stop();
             curPlayer.destroy();
             curPlayer = null;
         }

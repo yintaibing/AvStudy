@@ -62,7 +62,7 @@ void oldVersionDecode(
         jmethodID playFunc,
         AVFormatContext *pFormatCtx,
         AVCodecContext *pCodecCtx,
-        SwrContext *pSwrContext,
+        SwrContext *pSwrCtx,
         int audio_stream_index,
         int out_sample_rate,
         int out_channels,
@@ -88,7 +88,7 @@ void oldVersionDecode(
             // 解码数据包
             avcodec_decode_audio4(pCodecCtx, frame, &got_frame, packet);
             if (got_frame) {
-                swr_convert(pSwrContext, &out_buffer, out_sample_rate * out_channels,
+                swr_convert(pSwrCtx, &out_buffer, out_sample_rate * out_channels,
                             (const uint8_t **) frame->data, frame->nb_samples);
                 playAfterDecode(jni, jObj, playFunc, frame, out_buffer, out_format,
                                 out_channels_nb);
@@ -120,7 +120,7 @@ void newVersionDecode(
         jmethodID playFunc,
         AVFormatContext *pFormatCtx,
         AVCodecContext *pCodecCtx,
-        SwrContext *pSwrContext,
+        SwrContext *pSwrCtx,
         int audio_stream_index,
         int out_sample_rate,
         int out_channels,
@@ -161,7 +161,7 @@ void newVersionDecode(
                     break;
                 }
 
-                swr_convert(pSwrContext, &out_buffer, out_sample_rate * out_channels,
+                swr_convert(pSwrCtx, &out_buffer, out_sample_rate * out_channels,
                             (const uint8_t **) frame->data, frame->nb_samples);
                 playAfterDecode(jni, jObj, playFunc, frame, out_buffer, out_format,
                                 out_channels_nb);
@@ -182,6 +182,8 @@ JNIEXPORT void JNICALL Java_me_yintaibing_avstudy_audio_Mp3FFmpegAudioTrackPlaye
         JNIEnv *jni,
         jobject jObj,
         jstring filePath) {
+    setGlobalControl(true);
+
     const char *input = jni->GetStringUTFChars(filePath, nullptr);
     LOGE("输入文件：%s", input)
     char errorbuf[1024] = {0};
@@ -257,22 +259,22 @@ JNIEXPORT void JNICALL Java_me_yintaibing_avstudy_audio_Mp3FFmpegAudioTrackPlaye
 
 
     // 5、初始化格式转换上下文
-    SwrContext *pSwrContext = swr_alloc();
-    swr_alloc_set_opts(pSwrContext, out_ch_layout, out_format, out_sample_rate,
+    SwrContext *pSwrCtx = swr_alloc();
+    swr_alloc_set_opts(pSwrCtx, out_ch_layout, out_format, out_sample_rate,
                        pCodecCtx->channel_layout, pCodecCtx->sample_fmt, pCodecCtx->sample_rate, 0,
                        nullptr);
-    swr_init(pSwrContext);
+    swr_init(pSwrCtx);
 
 
     // 6、读取流内容，解码并处理
-    oldVersionDecode(jni, jObj, playTrack, pFormatCtx, pCodecCtx, pSwrContext, audio_stream_index,
+    oldVersionDecode(jni, jObj, playTrack, pFormatCtx, pCodecCtx, pSwrCtx, audio_stream_index,
             out_sample_rate, out_channels, out_ch_layout, out_format);
-//    newVersionDecode(jni, jObj, playTrack, pFormatCtx, pCodecCtx, pSwrContext, audio_stream_index,
+//    newVersionDecode(jni, jObj, playTrack, pFormatCtx, pCodecCtx, pSwrCtx, audio_stream_index,
 //                     out_sample_rate, out_channels, out_ch_layout, out_format);
 
 
     // 7、释放资源
-    swr_free(&pSwrContext);
+    swr_free(&pSwrCtx);
     avcodec_close(pCodecCtx);
     avformat_close_input(&pFormatCtx);
     jni->ReleaseStringUTFChars(filePath, input);
