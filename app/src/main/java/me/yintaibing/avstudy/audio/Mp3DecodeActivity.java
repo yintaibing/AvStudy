@@ -31,16 +31,16 @@ public class Mp3DecodeActivity extends AppCompatActivity {
         tvFilePath.setText(audioFilePath);
         tvAudioInfo = findViewById(R.id.tv_audio_info);
 
-        findViewById(R.id.btn_default_file).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_default_mp3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setAudioFilePath(defaultAudioFilePath);
+                setAudioFilePath(MainActivity.TEST_MP3);
             }
         });
-        findViewById(R.id.btn_album_file).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_default_aac).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                selectMp4FromAlbum();
+                setAudioFilePath(MainActivity.TEST_AAC);
             }
         });
 
