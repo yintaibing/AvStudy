@@ -16,12 +16,19 @@ public class Mp3FFmpegAudioTrackPlayer extends AbsMp3Player {
         new Thread() {
             @Override
             public void run() {
-                decodeMp3(getAudioFilePath());
+                nativeStart(getAudioFilePath());
             }
         }.start();
     }
 
-    private native void decodeMp3(String filePath);
+    private native void nativeStart(String filePath);
+
+    @Override
+    protected void doStop() {
+        nativeStop();
+    }
+
+    private native void nativeStop();
 
     //C调用，创建AudioTrack
     public void createAudioTrack(int sampleRateInHz, int nb_channals) {

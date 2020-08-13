@@ -13,6 +13,7 @@ public class Mp3DecodeActivity extends AppCompatActivity {
     private static final String TAG = "Mp3DecodeActivity";
 
     private TextView tvFilePath;
+    private TextView tvAudioInfo;
 
     private final String defaultAudioFilePath = MainActivity.TEST_MP3;
     private String audioFilePath = defaultAudioFilePath;
@@ -28,6 +29,7 @@ public class Mp3DecodeActivity extends AppCompatActivity {
 
         tvFilePath = findViewById(R.id.tv_file_path);
         tvFilePath.setText(audioFilePath);
+        tvAudioInfo = findViewById(R.id.tv_audio_info);
 
         findViewById(R.id.btn_default_file).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +60,14 @@ public class Mp3DecodeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 play(2);
+            }
+        });
+        findViewById(R.id.btn_stop).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (curPlayer != null) {
+                    curPlayer.stop();
+                }
             }
         });
     }
@@ -93,7 +103,28 @@ public class Mp3DecodeActivity extends AppCompatActivity {
             default:
                 return;
         }
+        curPlayer.setCallback(new AbsMp3Player.Callback() {
+            @Override
+            public void onGotAudioInfo(AudioInfo audioInfo) {
+                showAudioInfo(audioInfo);
+            }
+        });
         curPlayer.setAudioFilePath(audioFilePath);
         curPlayer.tryPlay();
+    }
+
+    private void showAudioInfo(AudioInfo audioInfo) {
+        if (audioInfo == null) return;
+        final String text = "音频信息：" +
+                "\n采样率：" + audioInfo.sampleRate +
+                "\n位深度：" + audioInfo.sampleFormat +
+                "\n声道数：" + audioInfo.channels /*+
+                "\n比特率：" + audioInfo.getBitRate()*/;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tvAudioInfo.setText(text);
+            }
+        });
     }
 }

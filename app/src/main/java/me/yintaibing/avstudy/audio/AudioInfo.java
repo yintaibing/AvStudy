@@ -2,10 +2,10 @@ package me.yintaibing.avstudy.audio;
 
 public class AudioInfo {
     int sampleRate;
-    int sampleFormat;
     long channels;
+    String sampleFormat;
 
-    public long getBitRate() {
-        return sampleRate * sampleFormat * channels;
-    }
+//    public long getBitRate() {
+//        return sampleRate * sampleFormat * channels;
+//    }
 }

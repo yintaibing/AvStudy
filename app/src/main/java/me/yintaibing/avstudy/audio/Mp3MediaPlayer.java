@@ -29,6 +29,11 @@ public class Mp3MediaPlayer extends AbsMp3Player {
     }
 
     @Override
+    protected void doStop() {
+        stopAndRelease();
+    }
+
+    @Override
     public void destroy() {
         super.destroy();
         stopAndRelease();

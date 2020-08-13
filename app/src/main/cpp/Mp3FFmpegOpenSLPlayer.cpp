@@ -254,14 +254,14 @@ void openSLShutdown() {
 
 /*############### JNI代码 ##################*/
 
-JNIEXPORT void JNICALL Java_me_yintaibing_avstudy_audio_Mp3FFmpegOpenSLPlayer_decodeMp3
+JNIEXPORT void JNICALL Java_me_yintaibing_avstudy_audio_Mp3FFmpegOpenSLPlayer_nativeStart
         (JNIEnv *env, jobject, jstring filePath) {
     const char *input = env->GetStringUTFChars(filePath, 0);
     openSLPlay(input);
     env->ReleaseStringUTFChars(filePath, input);
 }
 
-JNIEXPORT void JNICALL Java_me_yintaibing_avstudy_audio_Mp3FFmpegOpenSLPlayer_stop
+JNIEXPORT void JNICALL Java_me_yintaibing_avstudy_audio_Mp3FFmpegOpenSLPlayer_nativeStop
         (JNIEnv *, jobject) {
     openSLShutdown();
 }

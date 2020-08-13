@@ -10,12 +10,17 @@ public class Mp3FFmpegOpenSLPlayer extends AbsMp3Player {
         new Thread() {
             @Override
             public void run() {
-                decodeMp3(getAudioFilePath());
+                nativeStart(getAudioFilePath());
             }
         }.start();
     }
 
-    private native void decodeMp3(String filePath);
+    private native void nativeStart(String filePath);
 
-    private native void stop();
+    @Override
+    protected void doStop() {
+        nativeStop();
+    }
+
+    private native void nativeStop();
 }

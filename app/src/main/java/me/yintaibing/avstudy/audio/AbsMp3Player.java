@@ -26,13 +26,13 @@ public abstract class AbsMp3Player {
     }
 
     public void onGotAudioInfo(int sampleRate,
-                               int sampleFormat,
-                               Long channels) {
+                               long channels,
+                               String sampleFormat) {
         if (callback != null) {
             AudioInfo audioInfo = new AudioInfo();
             audioInfo.sampleRate = sampleRate;
-            audioInfo.sampleFormat = sampleFormat;
             audioInfo.channels = channels;
+            audioInfo.sampleFormat = sampleFormat;
             callback.onGotAudioInfo(audioInfo);
         }
     }
@@ -44,6 +44,12 @@ public abstract class AbsMp3Player {
     }
 
     protected abstract void doPlay();
+
+    public void stop() {
+        doStop();
+    }
+
+    protected abstract void doStop();
 
     @CallSuper
     public void destroy() {

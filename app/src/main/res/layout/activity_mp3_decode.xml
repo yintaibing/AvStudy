@@ -71,4 +71,17 @@
             android:layout_weight="1"
             android:text="FFmpeg +\nOpenSL播放" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_stop"
+        style="@android:style/Widget.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="停止播放" />
+
+    <TextView
+        android:id="@+id/tv_audio_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"/>
 </LinearLayout>
